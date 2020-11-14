@@ -1,0 +1,1 @@
+web: gunicorn diwali_pro.wsgi
