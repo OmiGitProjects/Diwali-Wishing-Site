@@ -26,7 +26,7 @@ def register(request):
 def loginUser(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            form = UserLoginForm(request.POST)
+            form = UserLoginForm(request.POST, label_suffix=' 💥 ')
             if form.is_valid():
                 username = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password')
@@ -41,7 +41,7 @@ def loginUser(request):
                     messages.info(request, "Type Correct Username and Password")
                 
         else:
-            form = UserLoginForm()
+            form = UserLoginForm(label_suffix=' 💥 ')
         
         context = {'form': form}
         return render(request, 'quotesApp/login_.html', context)
@@ -55,7 +55,7 @@ def logout_(request):
 @login_required()
 def addWishes(request):
     if request.method == 'POST':
-        form = AddWishesForm(request.POST)
+        form = AddWishesForm(request.POST, label_suffix=' 💌 ')
         if form.is_valid():
             author = request.user.username
             quote = form.cleaned_data.get('quote')
@@ -66,7 +66,7 @@ def addWishes(request):
             messages.success(request, f'{author} Your Wish is Added Successfully!!!')
             return redirect('homepage')
     else:
-        form = AddWishesForm()
+        form = AddWishesForm(label_suffix=' 💌 ')
     context = {'form': form}
     return render(request, 'quotesApp/addWishes.html', context)
 
@@ -87,13 +87,13 @@ def customPasswordChange(request):
 @login_required()
 def UserProfile(request):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = CustomUserChangeForm(request.POST, instance=request.user, label_suffix=' 📝 ')
         if form.is_valid():
             form.save()
             messages.success(request, 'Your Profile Info is Updated...')
             return redirect('profile')
     else:
-        form = CustomUserChangeForm(instance=request.user)
+        form = CustomUserChangeForm(instance=request.user, label_suffix=' 📝 ')
 
     context = {'form': form}
     return render(request, 'quotesApp/profile.html', context)
