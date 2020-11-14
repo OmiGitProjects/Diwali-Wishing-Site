@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block link_styles %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock link_styles %}
+
+{% block title %} From Onkar Nardekar {% endblock title %}
+
+{% block content %}
+
+<section class="py-5 text-center container">
+    {% if messages %}
+    <div class="messages_info_tags mt-3">
+        {% for message in messages %}
+        {% if message.tags %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Happy Diwali!</strong> {{ message }}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="text-light display-4">Happy Diwali From Onkar Nardekar</h1>
+            <p class="lead text-light">Just like the colours of rangoli, hope this Diwali brings new smiles,
+                undiscovered avenues, and different perspectives and unbound happiness. Have a wonderful Diwali and a
+                great New Year!</p>
+
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'homepage' %}" class="btn btn-warning my-2">{{ request.user }} Your are My Friend!</a>
+            {% else %}
+                <a href="{% url 'register' %}" class="btn btn-warning my-2">Be My Friend 🙋🏻‍♂️</a>
+            {% endif %}
+                <a href="{% url 'addWishes' %}" class="btn btn-danger my-2">Add Diwali Wishes 🗯 </a>
+                <a href="#quote" class="btn btn-info my-2">See Others Wishes </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="quotes" id="quote">
+        {% for quote in quotes %}
+        <div class="blockquote-wrapper">
+            <div class="blockquote">
+                <h1>
+                    {{ quote.quote }}
+                </h1>
+                <h4><em>&mdash;{{ quote.author }}</em><br><em>Time : {{ quote.timeStamp|naturaltime }}</em></h4>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock content %}

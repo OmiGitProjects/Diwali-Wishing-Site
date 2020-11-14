@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Add Wishes {% endblock title %}
+
+{% block link_styles %}     
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock link_styles %}
+
+{% block content %}
+
+<section class="container">
+
+    <h3 class="text-light text-center mt-3">🎊 Add Your Diwali Wishes for All 🎉</h3>
+    <h6 class="text-white text-center mt-2">It will Display This ---> [ by {{ request.user }} ] in Author Section</h6>
+    <div class="form_add mt-5">
+        <table class="table">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <tr>
+                        <td>{{ field.label_tag }}</td>
+                        <td>{{ field }}</td>
+                        <td>{{ field.errors|striptags }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td><input type="submit" value="Add Wish" class="btn btn-light"/></td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+</section>
+
+{% endblock content %}
